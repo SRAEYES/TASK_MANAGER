@@ -1,79 +1,120 @@
 import SwiftUI
 
-struct Task: Identifiable, Codable {
-    let id = UUID()
-    var title: String
-    var isCompleted: Bool
-}
-
-class TaskViewModel: ObservableObject {
-    @Published var tasks: [Task] = []
-
-    func addTask(title: String) {
-        let newTask = Task(title: title, isCompleted: false)
-        tasks.append(newTask)
-    }
-
-    func deleteTask(at offsets: IndexSet) {
-        tasks.remove(atOffsets: offsets)
-    }
-
-    func toggleCompletion(for task: Task) {
-        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
-            tasks[index].isCompleted.toggle()
-        }
-    }
-}
-
 struct ContentView: View {
     @StateObject private var taskVM = TaskViewModel()
     @State private var newTaskTitle: String = ""
+    @State private var selectedPriority: Priority = .medium
 
     var body: some View {
         NavigationView {
             VStack {
+                // Search Bar
+                SearchBar(text: $taskVM.searchText)
+
+                // New Task Input
                 HStack {
-                    TextField("Enter new task", text: $newTaskTitle)
+                    TextField("Enter new task...", text: $newTaskTitle)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
 
+                    Menu {
+                        Picker("Priority", selection: $selectedPriority) {
+                            ForEach(Priority.allCases, id: \.self) { priority in
+                                Text(priority.rawValue)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "flag.fill")
+                            .font(.title3)
+                            .foregroundColor(priorityColor(selectedPriority))
+                            .padding(.trailing)
+                    }
+
                     Button(action: {
                         if !newTaskTitle.isEmpty {
-                            taskVM.addTask(title: newTaskTitle)
+                            taskVM.addTask(title: newTaskTitle, priority: selectedPriority)
                             newTaskTitle = ""
+                            selectedPriority = .medium
+                            impactFeedback()
                         }
                     }) {
                         Image(systemName: "plus.circle.fill")
-                            .font(.title)
+                            .font(.largeTitle)
                             .foregroundColor(.blue)
                     }
                     .padding(.trailing)
                 }
                 .padding(.top)
 
+                // Task List
                 List {
-                    ForEach(taskVM.tasks) { task in
+                    ForEach(taskVM.filteredTasks) { task in
                         HStack {
-                            Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                                .onTapGesture {
-                                    taskVM.toggleCompletion(for: task)
-                                }
-                                .foregroundColor(task.isCompleted ? .green : .gray)
+                            Circle()
+                                .fill(priorityColor(task.priority))
+                                .frame(width: 10, height: 10)
 
-                            Text(task.title)
-                                .strikethrough(task.isCompleted, color: .gray)
-                                .foregroundColor(task.isCompleted ? .gray : .primary)
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(task.title)
+                                    .font(.headline)
+                                    .strikethrough(task.isCompleted)
+                                    .foregroundColor(task.isCompleted ? .gray : .primary)
+
+                                Text(task.createdAt, style: .date)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+
+                            Spacer()
+
+                            if task.isCompleted {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
+                            }
+                        }
+                        .padding(.vertical, 6)
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                taskVM.toggleCompletion(for: task)
+                                impactFeedback()
+                            } label: {
+                                Label("Complete", systemImage: "checkmark")
+                            }
+                            .tint(.green)
+                        }
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                taskVM.deleteTask(task: task)
+                                impactFeedback()
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
                         }
                     }
-                    .onDelete(perform: taskVM.deleteTask)
                 }
                 .listStyle(PlainListStyle())
             }
-            .navigationTitle("Task Manager")
+            .navigationTitle("📝 Task Manager")
         }
+    }
+
+    // Priority Color
+    private func priorityColor(_ priority: Priority) -> Color {
+        switch priority {
+        case .high: return .red
+        case .medium: return .orange
+        case .low: return .blue
+        }
+    }
+
+    // Haptic Feedback
+    private func impactFeedback() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
     }
 }
 
 #Preview {
     ContentView()
 }
+

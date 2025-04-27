@@ -68,6 +68,6 @@ Push notifications.
 
 Dark mode customization.
 
-👨‍💻 Author
+Author
 Developed as a beginner-friendly full-stack iOS project for learning SwiftUI and Firebase integration.
 

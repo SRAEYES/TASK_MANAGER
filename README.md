@@ -34,7 +34,7 @@ This app allows users to add, view, complete, and delete tasks in real-time, wit
 ## Setup Instructions
 1. Clone the repo:
    ```bash
-   git clone <repository_link>
+   git clone https://github.com/SRAEYES/TASK_MANAGER
 2. Open the .xcworkspace file in Xcode.
 
 3. Run pod install to install Firebase dependencies.

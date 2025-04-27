@@ -1,73 +1,59 @@
-# TASK_MANAGER
- To-Do List App (SwiftUI)
+# To-Do List App (SwiftUI)
 
-A simple, clean, and beginner-friendly To-Do List application built using SwiftUI for the frontend and Firebase Firestore for backend database services.
-The app allows users to add, view, complete, and delete tasks in real-time, with optional user authentication using Firebase Auth.
+A simple, clean, and beginner-friendly To-Do List application built using SwiftUI for the frontend and Firebase Firestore for backend database services.  
+This app allows users to add, view, complete, and delete tasks in real-time, with optional user authentication using Firebase Auth.
 
-Features
-Create and manage tasks easily.
+## Features
+- **Create and manage tasks easily.**
+- **Mark tasks as completed.**
+- **Delete tasks when done.**
+- **Real-time data synchronization using Firebase Firestore.**
+- **Smooth and intuitive SwiftUI interface.**
 
-Mark tasks as completed.
+## Technologies Used
+- **SwiftUI** — UI Framework for iOS development.
+- **Firebase Firestore** — Cloud NoSQL database for storing tasks.
+- **Firebase Authentication** — (Optional) for user login & signup.
+- **Xcode** — IDE for iOS app development.
 
-Delete tasks when done.
+## How It Works
+1. Users can **add** a new task through a simple form.
+2. All tasks are **stored securely in Firebase Firestore**.
+3. Tasks are displayed in a **real-time updating list**.
+4. Users can **mark tasks as complete** or **delete them**.
+5. *(Optional)* Users can **sign up/log in** to manage their own private task lists.
 
-Real-time data synchronization using Firebase Firestore.
+## Project Structure
+- **ContentView.swift** — Main entry point and app navigation.
+- **TaskListView.swift** — Displays the list of tasks.
+- **AddTaskView.swift** — Interface to add new tasks.
+- **TaskModel.swift** — Model for tasks.
+- **TaskViewModel.swift** — Handles Firestore database operations.
+- **LoginView.swift / RegisterView.swift** (optional) — Authentication views.
 
-Smooth and intuitive SwiftUI interface.
+## Setup Instructions
+1. Clone the repo:
+   ```bash
+   git clone <repository_link>
+2. Open the .xcworkspace file in Xcode.
 
-Technologies Used
-SwiftUI — UI Framework for iOS development.
+3. Run pod install to install Firebase dependencies.
 
-Firebase Firestore — Cloud NoSQL database for storing tasks.
+4. Set up a Firebase project and add your GoogleService-Info.plist file.
 
-Firebase Authentication — (Optional) for user login & signup.
+5. Build and run the app on a simulator or device.
 
-Xcode — IDE for iOS app development.
+## Screenshot
+![output](https://github.com/user-attachments/assets/1b7a15a7-f734-410e-ab9e-eff3595a48b6)
 
-How It Works
-Users can add a new task through a simple form.
 
-All tasks are stored securely in Firebase Firestore.
+## Future Improvements
+1. Add due dates and reminders.
 
-Tasks are displayed in a real-time updating list.
+2. Task categories or labels.
 
-Users can mark tasks as complete or delete them.
+3. Push notifications.
 
-(Optional) Users can sign up/log in to manage their own private task lists.
+4. Dark mode customization.
 
-Project Structure
-ContentView.swift — Main entry point and app navigation.
-
-TaskListView.swift — Displays the list of tasks.
-
-AddTaskView.swift — Interface to add new tasks.
-
-TaskModel.swift — Model for tasks.
-
-TaskViewModel.swift — Handles Firestore database operations.
-
-LoginView.swift / RegisterView.swift (optional) — Authentication views.
-
-Setup Instructions
-Clone the repo.
-
-Open the .xcworkspace file in Xcode.
-
-Run pod install to install Firebase dependencies.
-
-Set up a Firebase project and add your GoogleService-Info.plist file.
-
-Build and run the app on a simulator or device.
-
-Future Improvements
-Add due dates and reminders.
-
-Task categories or labels.
-
-Push notifications.
-
-Dark mode customization.
-
-Author
-Developed as a beginner-friendly full-stack iOS project for learning SwiftUI and Firebase integration.
 

@@ -1,5 +1,5 @@
 # TASK_MANAGER
- To-Do List App (SwiftUI + Firebase)
+ To-Do List App (SwiftUI)
 
 A simple, clean, and beginner-friendly To-Do List application built using SwiftUI for the frontend and Firebase Firestore for backend database services.
 The app allows users to add, view, complete, and delete tasks in real-time, with optional user authentication using Firebase Auth.
